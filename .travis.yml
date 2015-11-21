@@ -12,6 +12,7 @@ before_install:
   - redis-server redis.conf &
 
 install:
+  - pwd
   - perl Build.pl
   - ./Build installdeps
 #  - pip install -r requirements.txt
