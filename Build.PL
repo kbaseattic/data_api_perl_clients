@@ -26,6 +26,7 @@ my %module_build_args = (
   "requires" => {
     "Thrift" => 0,
     "Try::Tiny" => 0,
+    "Class::Accessor" => 0,
   },
   "script_files" => []
 );
