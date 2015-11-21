@@ -2,6 +2,9 @@
 
 use Test::More;
 
+plan skip_all => 'not ready yet';
+exit(0);
+
 use DOEKBase::DataAPI::sequence::assembly::ClientAPI;
 
 my $url='http://localhost:9102';
