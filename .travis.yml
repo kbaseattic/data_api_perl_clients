@@ -12,7 +12,7 @@ before_install:
 #  - redis-server redis.conf &
 
 install:
-  - cpanm install Devel::Cover
+  - cpanm install Devel::Cover Devel::Cover::Report::Codecov
   - perl Build.PL
   - ./Build installdeps --cpan-client 'cpanm'
   - ./Build install --cpan-client 'cpanm'
