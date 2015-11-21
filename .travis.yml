@@ -16,6 +16,7 @@ install:
   - perl Build.PL
   - ./Build installdeps --cpan-client 'cpanm'
   - ./Build install --cpan-client 'cpanm'
+#  need to get data_api and build servers
 #  - pip install -r requirements.txt
 #  - python setup.py install -vv
 
