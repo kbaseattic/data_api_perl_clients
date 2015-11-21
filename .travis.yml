@@ -38,7 +38,7 @@ env:
 #  - KB_REDIS_HOST="";        KB_NOSE_CFG=nose-ci.cfg
 
 after_success:
-  - codecov
+  - cover -report codecov
 #  - kill $(cat taxonAPI.pid)
 #  - kill $(cat assemblyAPI.pid)
 ##  - kill $(cat genomeannotationAPI.pid)
