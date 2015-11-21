@@ -8,7 +8,8 @@ use Module::Build 0.3601;
 my %module_build_args = (
   "build_requires" => {
     "Module::Build" => "0.3601",
-    "Test::More" => 0
+    "Test::More" => 0,
+    "Devel::Cover" => 0,
   },
   "configure_requires" => {
     "Module::Build" => "0.3601"
