@@ -14,6 +14,81 @@ meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: DOEKBaseDataAPI
+provides:
+  DOEKBase::DataAPI::sequence::assembly::AssemblyContig:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/Types.pm
+  DOEKBase::DataAPI::sequence::assembly::AssemblyExternalSourceInfo:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/Types.pm
+  DOEKBase::DataAPI::sequence::assembly::AssemblyStats:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/Types.pm
+  DOEKBase::DataAPI::sequence::assembly::AttributeException:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/Types.pm
+  DOEKBase::DataAPI::sequence::assembly::AuthenticationException:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/Types.pm
+  DOEKBase::DataAPI::sequence::assembly::AuthorizationException:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/Types.pm
+  DOEKBase::DataAPI::sequence::assembly::ClientAPI:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/ClientAPI.pm
+  DOEKBase::DataAPI::sequence::assembly::Constants:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/Constants.pm
+  DOEKBase::DataAPI::sequence::assembly::ObjectReferenceException:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/Types.pm
+  DOEKBase::DataAPI::sequence::assembly::ServiceException:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/Types.pm
+  DOEKBase::DataAPI::sequence::assembly::TypeException:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/Types.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_serviceClient:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_serviceIf:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_serviceProcessor:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_serviceRest:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_assembly_id_args:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_assembly_id_result:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_contig_gc_content_args:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_contig_gc_content_result:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_contig_ids_args:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_contig_ids_result:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_contig_lengths_args:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_contig_lengths_result:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_contigs_args:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_contigs_result:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_dna_size_args:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_dna_size_result:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_external_source_info_args:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_external_source_info_result:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_gc_content_args:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_gc_content_result:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_genome_annotations_args:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_genome_annotations_result:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_number_contigs_args:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_number_contigs_result:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_stats_args:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+  DOEKBase::DataAPI::sequence::assembly::thrift_service_get_stats_result:
+    file: lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
 requires:
   Thrift: 0
   Try::Tiny: 0
