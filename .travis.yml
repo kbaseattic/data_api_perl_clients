@@ -27,7 +27,7 @@ before_script:
 script:
   - printf "PERL5LIB = $PERL5LIB \n"
   - find /home/travis/perl5/perlbrew -name ClientAPI.pm
-  - ./Build test
+  - ./Build testcover
 #  - coverage run `which nosetests` -c nose.cfg -c nose-local.cfg
 #  - coverage report --skip-covered
 
