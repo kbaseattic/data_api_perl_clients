@@ -40,13 +40,16 @@ install:
 before_script:
 #  - source ../core-develop/venv/bin/activate
 #  - data_api_start_service.py --service taxon --config ../core-develop/deployment.cfg > taxonAPI.out 2> taxonAPI.err &
-#  - data_api_start_service.py --service assembly --config ../core-develop/deployment.cfg > assemblyAPI.out 2> assemblyAPI.err &
-  - data_api_start_service.py --service assembly --config ../core-develop/deployment.cfg &
+  - cd ../core-develop
+  - data_api_start_service.py --service assembly --config deployment.cfg > assemblyAPI.out 2> assemblyAPI.err &
+#  - data_api_start_service.py --service assembly --config ../core-develop/deployment.cfg &
   - pwd
   - ls -l ..
   - ps axuwww
   - sleep 5
-#  - cat assemblyAPI.out
+  - cat assemblyAPI.out
+  - cat assemblyAPI.err
+  - cd ../data_api_perl_clients
 ##  - data_api_start_service.py --service genomeannotation --config deployment.cfg > genomeannotationAPI.out &
 
 script:
@@ -75,3 +78,7 @@ after_success:
   - cat assemblyAPI.out
   - cat gaAPI.out  
   - rm -f taxonAPI.out assemblyAPI.out gaAPI.out
+
+after_failure:
+  - cat ../core-develop/assemblyAPI.out
+  - cat ../core-develop/assemblyAPI.err
