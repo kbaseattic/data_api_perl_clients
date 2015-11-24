@@ -2,10 +2,6 @@ language: perl
 perl:
   - "5.16"
 
-cache:
-  directories:
-    - $HOME/core-develop/.cache/pip
-
 addons:
   apt:
     packages:
@@ -38,25 +34,20 @@ install:
   - ./Build install --cpan-client 'cpanm'
 
 before_script:
-#  - source ../core-develop/venv/bin/activate
-#  - data_api_start_service.py --service taxon --config ../core-develop/deployment.cfg > taxonAPI.out 2> taxonAPI.err &
   - cd ../core-develop
+  - data_api_start_service.py --service taxon --config ../core-develop/deployment.cfg > taxonAPI.out 2> taxonAPI.err &
   - data_api_start_service.py --service assembly --config deployment.cfg > assemblyAPI.out 2> assemblyAPI.err &
-#  - data_api_start_service.py --service assembly --config ../core-develop/deployment.cfg &
-  - pwd
-  - ls -l ..
-  - ps axuwww
   - sleep 5
-  - cat assemblyAPI.out
-  - cat assemblyAPI.err
   - cd ../data_api_perl_clients
 ##  - data_api_start_service.py --service genomeannotation --config deployment.cfg > genomeannotationAPI.out &
 
 script:
   - curl http://localhost:9102
   - printf "PERL5LIB = $PERL5LIB \n"
-# see if python clients work
-  - assembly_client_driver.py
+# see if python clients work (plus timings)
+  - assembly_client_driver.py > assemblyPythonClient.out
+# see if perl client scripts work (plus timings)
+  - assembly_client_driver.pl 2> assemblyPerlClient.out
 # dummy edit
   - ./Build testcover
 #  - coverage run `which nosetests` -c nose.cfg -c nose-local.cfg
@@ -70,15 +61,31 @@ env:
 
 after_success:
   - cover -report codecov
+  - cat assemblyPythonClient.out
+  - cat assemblyPerlClient.out
+# clean up after services
+  - cd ../core-develop
   - kill $(cat taxonAPI.pid)
   - kill $(cat assemblyAPI.pid)
 #  - kill $(cat genomeannotationAPI.pid)
 # Make service logs easy to inspect, then clean up
-  - cat taxonAPI.out
   - cat assemblyAPI.out
-  - cat gaAPI.out  
-  - rm -f taxonAPI.out assemblyAPI.out gaAPI.out
+  - cat assemblyAPI.err
+  - cat taxonAPI.out
+  - cat taxonAPI.err
+  - rm -f taxonAPI.* assemblyAPI.* gaAPI.*
 
 after_failure:
-  - cat ../core-develop/assemblyAPI.out
-  - cat ../core-develop/assemblyAPI.err
+  - cat assemblyPythonClient.out
+  - cat assemblyPerlClient.out
+# clean up after services
+  - cd ../core-develop
+  - kill $(cat taxonAPI.pid)
+  - kill $(cat assemblyAPI.pid)
+#  - kill $(cat genomeannotationAPI.pid)
+# Make service logs easy to inspect, then clean up
+  - cat assemblyAPI.out
+  - cat assemblyAPI.err
+  - cat taxonAPI.out
+  - cat taxonAPI.err
+  - rm -f taxonAPI.* assemblyAPI.* gaAPI.*
