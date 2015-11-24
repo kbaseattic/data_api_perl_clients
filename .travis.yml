@@ -1,4 +1,6 @@
-language: perl
+language: python
+python:
+  - "2.7"
 perl:
   - "5.16"
 
