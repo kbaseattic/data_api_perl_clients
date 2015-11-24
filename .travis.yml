@@ -15,7 +15,7 @@ sudo: false
 
 before_install:
   - cd ..
-  - git clone -b develop https://github.com/kbase/data_api.git core-develop
+  - git clone -b perlclient https://github.com/kkellerlbl/data_api.git core-develop
   - ( cd core-develop && git submodule init && git submodule update )
 # need the core for starting services
   - cd core-develop
