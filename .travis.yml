@@ -11,7 +11,14 @@ sudo: false
 
 # cache:
 #  directories:
+## need to find this cache dir, likely not in $HOME
 #    - $HOME/.cache/pip
+
+env:
+#  - KB_DEPLOY_URL="dir_cache"
+  - KB_DEPLOY_URL="dir_nocache"
+#  - KB_REDIS_HOST=localhost; KB_NOSE_CFG=nose-ci.cfg
+#  - KB_REDIS_HOST="";        KB_NOSE_CFG=nose-ci.cfg
 
 before_install:
   - cd ..
@@ -34,12 +41,13 @@ install:
   - ./Build install --cpan-client 'cpanm'
 
 before_script:
+# start API services
   - cd ../core-develop
   - data_api_start_service.py --service taxon --config ../core-develop/deployment.cfg > taxonAPI.out 2> taxonAPI.err &
   - data_api_start_service.py --service assembly --config deployment.cfg > assemblyAPI.out 2> assemblyAPI.err &
+##  - data_api_start_service.py --service genomeannotation --config deployment.cfg > genomeannotationAPI.out &
   - sleep 5
   - cd ../data_api_perl_clients
-##  - data_api_start_service.py --service genomeannotation --config deployment.cfg > genomeannotationAPI.out &
 
 script:
   - curl http://localhost:9102
@@ -47,17 +55,11 @@ script:
 # see if python clients work (plus timings)
   - assembly_client_driver.py > assemblyPythonClient.out
 # see if perl client scripts work (plus timings)
-  - assembly_client_driver.pl 2> assemblyPerlClient.out
+  - ./bin/assembly_client_driver.pl 2> assemblyPerlClient.out
 # dummy edit
   - ./Build testcover
 #  - coverage run `which nosetests` -c nose.cfg -c nose-local.cfg
 #  - coverage report --skip-covered
-
-env:
-#  - KB_DEPLOY_URL="dir_cache"
-  - KB_DEPLOY_URL="dir_nocache"
-#  - KB_REDIS_HOST=localhost; KB_NOSE_CFG=nose-ci.cfg
-#  - KB_REDIS_HOST="";        KB_NOSE_CFG=nose-ci.cfg
 
 after_success:
   - cover -report codecov
