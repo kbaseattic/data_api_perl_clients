@@ -37,6 +37,7 @@ before_script:
   - source ../core-develop/venv/bin/activate
   - nohup data_api_start_service.py --service taxon --config deployment.cfg > taxonAPI.out &
   - nohup data_api_start_service.py --service assembly --config deployment.cfg > assemblyAPI.out &
+  - cat assemblyAPI.out
 ##  - nohup data_api_start_service.py --service genomeannotation --config deployment.cfg > genomeannotationAPI.out &
 
 script:
