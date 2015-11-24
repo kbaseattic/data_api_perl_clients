@@ -27,20 +27,19 @@ before_install:
 
 install:
 # build the codecov module
-  - cd $HOME/data_api_perl_clients
+  - cd ../data_api_perl_clients
   - cpanm  --notest --skip-satisfied Devel::Cover Devel::Cover::Report::Codecov
   - perl Build.PL
   - ./Build installdeps --cpan-client 'cpanm'
   - ./Build install --cpan-client 'cpanm'
 
 before_script:
-  - source $HOME/core-develop/venv/bin/activate
+  - source ../core-develop/venv/bin/activate
   - nohup data_api_start_service.py --service taxon --config deployment.cfg > taxonAPI.out &
   - nohup data_api_start_service.py --service assembly --config deployment.cfg > assemblyAPI.out &
 ##  - nohup data_api_start_service.py --service genomeannotation --config deployment.cfg > genomeannotationAPI.out &
 
 script:
-  - cd $HOME/data_api_perl_clients
   - printf "PERL5LIB = $PERL5LIB \n"
   - find /home/travis/perl5/perlbrew -name ClientAPI.pm
   - ./Build testcover
