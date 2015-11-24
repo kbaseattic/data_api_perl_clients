@@ -35,11 +35,12 @@ install:
 
 before_script:
 #  - source ../core-develop/venv/bin/activate
-  - data_api_start_service.py --service taxon --config ../core-develop/deployment.cfg > taxonAPI.out 2> taxonAPI.err &
-  - data_api_start_service.py --service assembly --config ../core-develop/deployment.cfg > assemblyAPI.out 2> assemblyAPI.err &
+#  - data_api_start_service.py --service taxon --config ../core-develop/deployment.cfg > taxonAPI.out 2> taxonAPI.err &
+#  - data_api_start_service.py --service assembly --config ../core-develop/deployment.cfg > assemblyAPI.out 2> assemblyAPI.err &
+  - data_api_start_service.py --service assembly --config ../core-develop/deployment.cfg &
   - ps axuwww
+#  - cat assemblyAPI.out
   - curl http://localhost:9102
-  - cat assemblyAPI.out
 ##  - nohup data_api_start_service.py --service genomeannotation --config deployment.cfg > genomeannotationAPI.out &
 
 script:
