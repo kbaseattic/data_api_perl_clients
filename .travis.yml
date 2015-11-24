@@ -54,6 +54,11 @@ env:
 
 after_success:
   - cover -report codecov
-#  - kill $(cat taxonAPI.pid)
-#  - kill $(cat assemblyAPI.pid)
-##  - kill $(cat genomeannotationAPI.pid)
+  - kill $(cat taxonAPI.pid)
+  - kill $(cat assemblyAPI.pid)
+#  - kill $(cat genomeannotationAPI.pid)
+# Make service logs easy to inspect, then clean up
+  - cat taxonAPI.out
+  - cat assemblyAPI.out
+  - cat gaAPI.out  
+  - rm -f taxonAPI.out assemblyAPI.out gaAPI.out
