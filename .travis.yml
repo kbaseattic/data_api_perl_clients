@@ -38,7 +38,7 @@ before_script:
   - nohup data_api_start_service.py --service taxon --config deployment.cfg > taxonAPI.out &
   - nohup data_api_start_service.py --service assembly --config deployment.cfg > assemblyAPI.out &
   - ps axuwww
-  - lsof -i
+  - curl http://localhost:9102
   - cat assemblyAPI.out
 ##  - nohup data_api_start_service.py --service genomeannotation --config deployment.cfg > genomeannotationAPI.out &
 
