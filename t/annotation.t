@@ -19,9 +19,9 @@ get_assembly
 get_feature_types
 get_feature_type_descriptions
 get_feature_type_counts
-get_proteins
 );
 
+#get_proteins
 #get_feature_ids
 #get_features
 #get_feature_locations
