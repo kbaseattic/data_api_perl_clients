@@ -59,7 +59,7 @@ script:
   - assembly_client_driver.py > assemblyPythonClient.out
   - taxon_client_driver.py > taxonPythonClient.out
 # do actual tests, with coverage
-  - DEVEL_COVER_OPTIONS=-ignore,.pm,-select=ClientAPI.pm ./Build testcover
+  - cover -test -ignore .pm -select ClientAPI.pm
 
 after_success:
   - cover -report codecov
