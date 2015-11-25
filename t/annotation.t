@@ -8,12 +8,13 @@ use Test::Exception;
 
 use DOEKBase::DataAPI::annotation::genome_annotation::ClientAPI;
 
-my $url='http://localhost:9101';
+my $url='http://localhost:9103';
 my $token=$ENV{'KB_AUTH_TOKEN'};
-my $ref='ReferenceTaxons/242159_taxon';
-my $badref='ReferenceTaxons/000000_taxon';
+my $ref='ReferenceGenomeAnnotations/kb|g.166819';
+my $badref='ReferenceGenomeAnnotations/kb|g.000000';
 
 my @functions = qw(
+get_taxon
 );
 
 plan tests => 2 * (scalar(@functions) + 1);

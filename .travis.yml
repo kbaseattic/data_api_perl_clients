@@ -45,6 +45,7 @@ before_script:
   - cd ../core-develop
   - data_api_start_service.py --service taxon --config ../core-develop/deployment.cfg > taxonAPI.out 2> taxonAPI.err &
   - data_api_start_service.py --service assembly --config deployment.cfg > assemblyAPI.out 2> assemblyAPI.err &
+  - data_api_start_service.py --service genome_annotation --config deployment.cfg > genome_annotationAPI.out 2> genome_annotationAPI.err &
 ##  - data_api_start_service.py --service genomeannotation --config deployment.cfg > genomeannotationAPI.out &
   - sleep 5
   - cd ../data_api_perl_clients
@@ -58,6 +59,7 @@ script:
 # see if python clients work (plus timings)
   - assembly_client_driver.py > assemblyPythonClient.out
   - taxon_client_driver.py > taxonPythonClient.out
+  - genome_annotation_client_driver.py > genome_annotationPythonClient.out
 # do actual tests, with coverage
   - cover -test -ignore .pm -select ClientAPI.pm
 
@@ -67,31 +69,39 @@ after_success:
   - cat assemblyPerlClient.out
   - cat taxonPythonClient.out
   - cat taxonPerlClient.out
+  - cat genome_annotationPythonClient.out
+#  - cat genome_annotationPerlClient.out
 # clean up after services
   - cd ../core-develop
   - kill $(cat taxonAPI.pid)
   - kill $(cat assemblyAPI.pid)
-#  - kill $(cat genomeannotationAPI.pid)
+  - kill $(cat genome_annotationAPI.pid)
 # Make service logs easy to inspect, then clean up
   - cat assemblyAPI.out
   - cat assemblyAPI.err
   - cat taxonAPI.out
   - cat taxonAPI.err
-  - rm -f taxonAPI.* assemblyAPI.* gaAPI.*
+  - cat genome_annotationAPI.out
+  - cat genome_annotationAPI.err
+  - rm -f taxonAPI.* assemblyAPI.* genome_annotationAPI.*
 
 after_failure:
   - cat assemblyPythonClient.out
   - cat assemblyPerlClient.out
   - cat taxonPythonClient.out
   - cat taxonPerlClient.out
+  - cat genome_annotationPythonClient.out
+#  - cat genome_annotationPerlClient.out
 # clean up after services
   - cd ../core-develop
   - kill $(cat taxonAPI.pid)
   - kill $(cat assemblyAPI.pid)
-#  - kill $(cat genomeannotationAPI.pid)
+  - kill $(cat genome_annotationAPI.pid)
 # Make service logs easy to inspect, then clean up
   - cat assemblyAPI.out
   - cat assemblyAPI.err
   - cat taxonAPI.out
   - cat taxonAPI.err
-  - rm -f taxonAPI.* assemblyAPI.* gaAPI.*
+  - cat genome_annotationAPI.out
+  - cat genome_annotationAPI.err
+  - rm -f taxonAPI.* assemblyAPI.* genome_annotationAPI.*
