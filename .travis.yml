@@ -54,16 +54,19 @@ script:
   - printf "PERL5LIB = $PERL5LIB \n"
 # see if perl client scripts work (plus timings)
   - ./bin/assembly_client_driver.pl 2> assemblyPerlClient.out
+  - ./bin/taxon_client_driver.pl 2> taxonPerlClient.out
 # see if python clients work (plus timings)
   - assembly_client_driver.py > assemblyPythonClient.out
+  - taxon_client_driver.py > taxonPythonClient.out
+# do actual tests, with coverage
   - ./Build testcover
-#  - coverage run `which nosetests` -c nose.cfg -c nose-local.cfg
-#  - coverage report --skip-covered
 
 after_success:
   - cover -report codecov
   - cat assemblyPythonClient.out
   - cat assemblyPerlClient.out
+  - cat taxonPythonClient.out
+  - cat taxonPerlClient.out
 # clean up after services
   - cd ../core-develop
   - kill $(cat taxonAPI.pid)
@@ -79,6 +82,8 @@ after_success:
 after_failure:
   - cat assemblyPythonClient.out
   - cat assemblyPerlClient.out
+  - cat taxonPythonClient.out
+  - cat taxonPerlClient.out
 # clean up after services
   - cd ../core-develop
   - kill $(cat taxonAPI.pid)
