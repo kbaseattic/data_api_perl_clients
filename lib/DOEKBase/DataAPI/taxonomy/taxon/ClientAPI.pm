@@ -200,6 +200,30 @@ sub get_genome_annotations {
   return $result;
 }
 
+sub get_parent {
+  my $self=shift;
+
+  my $result = try {
+    $self->{'client'}->get_parent($self->{'token'},$self->{'ref'});
+  } catch {
+    confess 'Exception thrown: code ' . $_->{'code'} . ' message ' . $_->{'message'};
+  };
+
+  return $result;
+}
+
+sub get_children {
+  my $self=shift;
+
+  my $result = try {
+    $self->{'client'}->get_children($self->{'token'},$self->{'ref'});
+  } catch {
+    confess 'Exception thrown: code ' . $_->{'code'} . ' message ' . $_->{'message'};
+  };
+
+  return $result;
+}
+
 
 
 1;

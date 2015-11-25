@@ -29,11 +29,10 @@ get_domain
 get_kingdom
 get_taxonomic_id
 get_scientific_lineage
+get_genome_annotations
+get_parent
+get_children
 );
-
-#get_genome_annotations
-#get_parent
-#get_children
 
     foreach my $function (@functions)
     {
