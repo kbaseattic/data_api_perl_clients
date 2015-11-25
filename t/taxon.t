@@ -32,7 +32,7 @@ get_parent
 get_children
 );
 
-plan tests => scalar(@functions);
+plan tests => 2 * (scalar(@functions) + 1);
 
 my $api = new_ok(DOEKBase::DataAPI::taxonomy::taxon::ClientAPI=>[{url=>$url,token=>$token,ref=>$ref}]);
 
