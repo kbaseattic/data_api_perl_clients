@@ -13,8 +13,6 @@ my $token=$ENV{'KB_AUTH_TOKEN'};
 my $ref='ReferenceTaxons/242159_taxon';
 my $badref='ReferenceTaxons/000000_taxon';
 
-my $api = DOEKBase::DataAPI::taxonomy::taxon::ClientAPI->new({url=>$url,token=>$token,ref=>$ref});
-
 my @functions = qw(
 get_info
 get_history
@@ -34,11 +32,19 @@ get_parent
 get_children
 );
 
-
 plan tests => scalar(@functions);
+
+my $api = new_ok(DOEKBase::DataAPI::taxonomy::taxon::ClientAPI=>[{url=>$url,token=>$token,ref=>$ref}]);
 
 foreach my $function (@functions)
 {
     ok($result = $api->$function(), "$function goodref" );
+}
+
+my $badapi = new_ok(DOEKBase::DataAPI::taxonomy::taxon::ClientAPI=>[{url=>$url,token=>$token,ref=>$badref}]);
+
+foreach my $function (@functions)
+{
+    dies_ok { $result = $badapi->$function() } "$function badref" ;
 }
 

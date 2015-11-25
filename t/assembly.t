@@ -36,10 +36,10 @@ foreach my $function (@functions)
     ok($result = $api->$function(), "$function goodref" );
 }
 
-my $api = new_ok(DOEKBase::DataAPI::sequence::assembly::ClientAPI=>[{url=>$url,token=>$token,ref=>$badref}]);
+my $badapi = new_ok(DOEKBase::DataAPI::sequence::assembly::ClientAPI=>[{url=>$url,token=>$token,ref=>$badref}]);
 
 foreach my $function (@functions)
 {
-    dies_ok { $result = $api->$function() } "$function badref" ;
+    dies_ok { $result = $badapi->$function() } "$function badref" ;
 }
 
