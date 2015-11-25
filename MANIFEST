@@ -8,4 +8,8 @@ lib/DOEKBase/DataAPI/sequence/assembly/Types.pm
 lib/DOEKBase/DataAPI/sequence/assembly/Constants.pm
 lib/DOEKBase/DataAPI/sequence/assembly/ClientAPI.pm
 lib/DOEKBase/DataAPI/sequence/assembly/thrift_service.pm
+lib/DOEKBase/DataAPI/taxonomy/taxon/ClientAPI.pm
+lib/DOEKBase/DataAPI/taxonomy/taxon/thrift_service.pm
+lib/DOEKBase/DataAPI/taxonomy/taxon/Types.pm
+lib/DOEKBase/DataAPI/taxonomy/taxon/Constants.pm
 META.json
