@@ -65,6 +65,8 @@ after_success:
   - cover -report codecov
   - cat assemblyPythonClient.out
   - cat assemblyPerlClient.out
+  - cat taxonPythonClient.out
+  - cat taxonPerlClient.out
 # clean up after services
   - cd ../core-develop
   - kill $(cat taxonAPI.pid)
@@ -80,6 +82,8 @@ after_success:
 after_failure:
   - cat assemblyPythonClient.out
   - cat assemblyPerlClient.out
+  - cat taxonPythonClient.out
+  - cat taxonPerlClient.out
 # clean up after services
   - cd ../core-develop
   - kill $(cat taxonAPI.pid)
