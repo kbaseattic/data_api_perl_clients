@@ -1,17 +1,17 @@
 #!perl -T
 
 use Test::More;
+use Test::Exception;
 
-plan skip_all => 'not ready yet';
-exit(0);
+#plan skip_all => 'not ready yet';
+#exit(0);
 
 use DOEKBase::DataAPI::sequence::assembly::ClientAPI;
 
 my $url='http://localhost:9102';
 my $token=$ENV{'KB_AUTH_TOKEN'};
 my $ref='PrototypeReferenceGenomes/kb|g.166819_assembly';
-
-my $api = DOEKBase::DataAPI::sequence::assembly::ClientAPI->new({url=>$url,token=>$token,ref=>$ref});
+my $badref='PrototypeReferenceGenomes/kb|g.000000_assembly';
 
 my @functions = qw(
 get_assembly_id
@@ -27,14 +27,19 @@ get_contig_gc_content
 get_contigs
 );
 
-plan tests => scalar(@functions);
+plan tests => 2 * (scalar(@functions) + 1);
+
+my $api = new_ok(DOEKBase::DataAPI::sequence::assembly::ClientAPI=>[{url=>$url,token=>$token,ref=>$ref}]);
 
 foreach my $function (@functions)
 {
-#    my $start_time=time();
-    ok($result = $api->$function() );
-#    my $elapsed_time=time()-$start_time;
-#    warn Dumper($result);
-#    warn "Got and parsed data from $function in $elapsed_time seconds";
+    ok($result = $api->$function(), "$function goodref" );
+}
+
+my $badapi = new_ok(DOEKBase::DataAPI::sequence::assembly::ClientAPI=>[{url=>$url,token=>$token,ref=>$badref}]);
+
+foreach my $function (@functions)
+{
+    dies_ok { $result = $badapi->$function() } "$function badref" ;
 }
 
