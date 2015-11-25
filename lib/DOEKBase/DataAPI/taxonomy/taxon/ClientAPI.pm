@@ -188,6 +188,18 @@ sub get_scientific_lineage {
   return $result;
 }
 
+sub get_scientific_name {
+  my $self=shift;
+
+  my $result = try {
+    $self->{'client'}->get_scientific_name($self->{'token'},$self->{'ref'});
+  } catch {
+    confess 'Exception thrown: code ' . $_->{'code'} . ' message ' . $_->{'message'};
+  };
+
+  return $result;
+}
+
 sub get_genome_annotations {
   my $self=shift;
 
