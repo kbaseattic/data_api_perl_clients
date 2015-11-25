@@ -18,21 +18,22 @@ sub test_client {
 
     my @functions = qw(
 get_info
-get_history
-get_provenance
-get_id
-get_name
-get_version
-get_genetic_code
-get_aliases
-get_domain
-get_kingdon
-get_taxonomic_id
-get_scientific_lineage
-get_genome_annotations
-get_parent
-get_children
 );
+
+#get_history
+#get_provenance
+#get_id
+#get_name
+#get_version
+#get_genetic_code
+#get_aliases
+#get_domain
+#get_kingdon
+#get_taxonomic_id
+#get_scientific_lineage
+#get_genome_annotations
+#get_parent
+#get_children
 
     foreach my $function (@functions)
     {
