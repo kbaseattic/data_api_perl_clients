@@ -15,7 +15,26 @@ my $badref='ReferenceGenomeAnnotations/kb|g.000000';
 
 my @functions = qw(
 get_taxon
+get_assembly
+get_feature_types
+get_feature_type_descriptions
+get_feature_type_counts
+get_feature_ids
+get_proteins
 );
+
+#get_features
+#get_feature_locations
+#get_feature_dna
+#get_feature_functions
+#get_feature_aliases
+#get_feature_publications
+#get_cds_by_mrna
+#get_mrna_by_cds
+#get_gene_by_cds
+#get_gene_by_mrna
+#get_cds_by_gene
+#get_mrna_by_gene
 
 plan tests => 2 * (scalar(@functions) + 1);
 
