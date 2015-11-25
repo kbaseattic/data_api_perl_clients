@@ -52,11 +52,10 @@ before_script:
 script:
   - curl http://localhost:9102
   - printf "PERL5LIB = $PERL5LIB \n"
-# see if python clients work (plus timings)
-  - assembly_client_driver.py > assemblyPythonClient.out
 # see if perl client scripts work (plus timings)
   - ./bin/assembly_client_driver.pl 2> assemblyPerlClient.out
-# dummy edit
+# see if python clients work (plus timings)
+  - assembly_client_driver.py > assemblyPythonClient.out
   - ./Build testcover
 #  - coverage run `which nosetests` -c nose.cfg -c nose-local.cfg
 #  - coverage report --skip-covered
