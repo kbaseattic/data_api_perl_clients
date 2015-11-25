@@ -44,136 +44,36 @@ sub new {
   
 }
 
-sub get_assembly_id {
-  my $self=shift;
+# cheat: use function generator
+my @functions = qw(
+get_assembly_id
+get_genome_annotations
+get_external_source_info
+get_stats
+get_number_contigs
+get_gc_content
+get_dna_size
+get_contig_ids
+get_contig_lengths
+get_contig_gc_content
+get_contigs
+);
 
-  my $result = try {
-    $self->{'client'}->get_assembly_id($self->{'token'},$self->{'ref'});
-  } catch {
-    confess 'Exception thrown: code ' . $_->{'code'} . ' message ' . $_->{'message'};
+foreach my $function (@functions)
+{
+  no strict 'refs';
+  *$function = sub {
+    my $self=shift;
+
+    my $result = try {
+      $self->{'client'}->$function($self->{'token'},$self->{'ref'});
+    } catch {
+      no warnings 'uninitialized';
+      confess "Exception thrown by $function: code " . $_->{'code'} . ' message ' . $_->{'message'};
+    };
+
+    return $result;
   };
-
-  return $result;
-}
-
-sub get_genome_annotations {
-  my $self=shift;
-
-  my $result = try {
-    $self->{'client'}->get_genome_annotations($self->{'token'},$self->{'ref'});
-  } catch {
-    confess 'Exception thrown: code ' . $_->{'code'} . ' message ' . $_->{'message'};
-  };
-
-  return $result;
-}
-
-sub get_external_source_info {
-  my $self=shift;
-
-  my $result = try {
-    $self->{'client'}->get_external_source_info($self->{'token'},$self->{'ref'});
-  } catch {
-    confess 'Exception thrown: code ' . $_->{'code'} . ' message ' . $_->{'message'};
-  };
-
-  return $result;
-}
-
-sub get_stats {
-  my $self=shift;
-
-  my $result = try {
-    $self->{'client'}->get_stats($self->{'token'},$self->{'ref'});
-  } catch {
-    confess 'Exception thrown: code ' . $_->{'code'} . ' message ' . $_->{'message'};
-  };
-
-  return $result;
-}
-
-sub get_number_contigs {
-  my $self=shift;
-
-  my $result = try {
-    $self->{'client'}->get_number_contigs($self->{'token'},$self->{'ref'});
-  } catch {
-    confess 'Exception thrown: code ' . $_->{'code'} . ' message ' . $_->{'message'};
-  };
-
-  return $result;
-}
-
-sub get_gc_content {
-  my $self=shift;
-
-  my $result = try {
-    $self->{'client'}->get_gc_content($self->{'token'},$self->{'ref'});
-  } catch {
-    confess 'Exception thrown: code ' . $_->{'code'} . ' message ' . $_->{'message'};
-  };
-
-  return $result;
-}
-
-sub get_dna_size {
-  my $self=shift;
-
-  my $result = try {
-    $self->{'client'}->get_dna_size($self->{'token'},$self->{'ref'});
-  } catch {
-    confess 'Exception thrown: code ' . $_->{'code'} . ' message ' . $_->{'message'};
-  };
-
-  return $result;
-}
-
-sub get_contig_ids {
-  my $self=shift;
-
-  my $result = try {
-    $self->{'client'}->get_contig_ids($self->{'token'},$self->{'ref'});
-  } catch {
-    confess 'Exception thrown: code ' . $_->{'code'} . ' message ' . $_->{'message'};
-  };
-
-  return $result;
-}
-
-sub get_contig_lengths {
-  my $self=shift;
-
-  my $result = try {
-    $self->{'client'}->get_contig_lengths($self->{'token'},$self->{'ref'});
-  } catch {
-    confess 'Exception thrown: code ' . $_->{'code'} . ' message ' . $_->{'message'};
-  };
-
-  return $result;
-}
-
-sub get_contig_gc_content {
-  my $self=shift;
-
-  my $result = try {
-    $self->{'client'}->get_contig_gc_content($self->{'token'},$self->{'ref'});
-  } catch {
-    confess 'Exception thrown: code ' . $_->{'code'} . ' message ' . $_->{'message'};
-  };
-
-  return $result;
-}
-
-sub get_contigs {
-  my $self=shift;
-
-  my $result = try {
-    $self->{'client'}->get_contigs($self->{'token'},$self->{'ref'});
-  } catch {
-    confess 'Exception thrown: code ' . $_->{'code'} . ' message ' . $_->{'message'};
-  };
-
-  return $result;
 }
 
 1;
