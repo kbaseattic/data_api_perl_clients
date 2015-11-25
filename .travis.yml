@@ -2,35 +2,17 @@ language: perl
 perl:
   - "5.16"
 
-# sudo: required
+addons:
+  apt:
+    packages:
+      - python-virtualenv
+
+sudo: false
 
 # cache:
 #  directories:
+## need to find this cache dir, likely not in $HOME
 #    - $HOME/.cache/pip
-
-before_install:
-#  - redis-server redis.conf &
-
-install:
-  - cpanm  --notest --skip-satisfied Devel::Cover Devel::Cover::Report::Codecov
-  - perl Build.PL
-  - ./Build installdeps --cpan-client 'cpanm'
-  - ./Build install --cpan-client 'cpanm'
-#  need to get data_api and build servers
-#  - pip install -r requirements.txt
-#  - python setup.py install -vv
-
-before_script:
-#  - nohup data_api_start_service.py --service taxon --config deployment.cfg > taxonAPI.out &
-#  - nohup data_api_start_service.py --service assembly --config deployment.cfg > assemblyAPI.out &
-##  - nohup data_api_start_service.py --service genomeannotation --config deployment.cfg > genomeannotationAPI.out &
-
-script:
-  - printf "PERL5LIB = $PERL5LIB \n"
-  - find /home/travis/perl5/perlbrew -name ClientAPI.pm
-  - ./Build testcover
-#  - coverage run `which nosetests` -c nose.cfg -c nose-local.cfg
-#  - coverage report --skip-covered
 
 env:
 #  - KB_DEPLOY_URL="dir_cache"
@@ -38,8 +20,78 @@ env:
 #  - KB_REDIS_HOST=localhost; KB_NOSE_CFG=nose-ci.cfg
 #  - KB_REDIS_HOST="";        KB_NOSE_CFG=nose-ci.cfg
 
+before_install:
+  - cd ..
+  - git clone -b perlclient https://github.com/kkellerlbl/data_api.git core-develop
+  - ( cd core-develop && git submodule init && git submodule update )
+# need the core for starting services
+  - cd core-develop
+  - virtualenv venv
+  - source venv/bin/activate
+  - pip install -r requirements.txt
+  - python setup.py install -vv
+#  - redis-server redis.conf &
+
+install:
+# build the codecov module
+  - cd ../data_api_perl_clients
+  - cpanm  --notest --skip-satisfied Devel::Cover Devel::Cover::Report::Codecov
+  - perl Build.PL
+  - ./Build installdeps --cpan-client 'cpanm'
+  - ./Build install --cpan-client 'cpanm'
+
+before_script:
+# start API services
+  - cd ../core-develop
+  - data_api_start_service.py --service taxon --config ../core-develop/deployment.cfg > taxonAPI.out 2> taxonAPI.err &
+  - data_api_start_service.py --service assembly --config deployment.cfg > assemblyAPI.out 2> assemblyAPI.err &
+##  - data_api_start_service.py --service genomeannotation --config deployment.cfg > genomeannotationAPI.out &
+  - sleep 5
+  - cd ../data_api_perl_clients
+
+script:
+  - curl http://localhost:9102
+  - printf "PERL5LIB = $PERL5LIB \n"
+# see if perl client scripts work (plus timings)
+  - ./bin/assembly_client_driver.pl 2> assemblyPerlClient.out
+  - ./bin/taxon_client_driver.pl 2> taxonPerlClient.out
+# see if python clients work (plus timings)
+  - assembly_client_driver.py > assemblyPythonClient.out
+  - taxon_client_driver.py > taxonPythonClient.out
+# do actual tests, with coverage
+  - cover -test -ignore .pm -select ClientAPI.pm
+
 after_success:
   - cover -report codecov
-#  - kill $(cat taxonAPI.pid)
-#  - kill $(cat assemblyAPI.pid)
-##  - kill $(cat genomeannotationAPI.pid)
+  - cat assemblyPythonClient.out
+  - cat assemblyPerlClient.out
+  - cat taxonPythonClient.out
+  - cat taxonPerlClient.out
+# clean up after services
+  - cd ../core-develop
+  - kill $(cat taxonAPI.pid)
+  - kill $(cat assemblyAPI.pid)
+#  - kill $(cat genomeannotationAPI.pid)
+# Make service logs easy to inspect, then clean up
+  - cat assemblyAPI.out
+  - cat assemblyAPI.err
+  - cat taxonAPI.out
+  - cat taxonAPI.err
+  - rm -f taxonAPI.* assemblyAPI.* gaAPI.*
+
+after_failure:
+  - cat assemblyPythonClient.out
+  - cat assemblyPerlClient.out
+  - cat taxonPythonClient.out
+  - cat taxonPerlClient.out
+# clean up after services
+  - cd ../core-develop
+  - kill $(cat taxonAPI.pid)
+  - kill $(cat assemblyAPI.pid)
+#  - kill $(cat genomeannotationAPI.pid)
+# Make service logs easy to inspect, then clean up
+  - cat assemblyAPI.out
+  - cat assemblyAPI.err
+  - cat taxonAPI.out
+  - cat taxonAPI.err
+  - rm -f taxonAPI.* assemblyAPI.* gaAPI.*

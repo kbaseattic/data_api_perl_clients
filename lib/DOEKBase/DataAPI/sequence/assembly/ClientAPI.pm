@@ -23,7 +23,7 @@ sub new {
   my $self      = {};
   my $vals      = shift || {};
 
-  foreach my $arg ('url','token','ref')
+  foreach my $arg ('url','ref')
   {
     confess "Need to provide a $arg" unless $vals->{$arg};
   }
