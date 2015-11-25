@@ -25,7 +25,7 @@ get_info
 #get_genetic_code
 #get_aliases
 #get_domain
-#get_kingdon
+#get_kingdom
 #get_taxonomic_id
 #get_scientific_lineage
 #get_genome_annotations
