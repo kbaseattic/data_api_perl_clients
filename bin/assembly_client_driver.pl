@@ -45,7 +45,7 @@ get_contigs
 
 my $url='http://localhost:9102';
 my $token=$ENV{'KB_AUTH_TOKEN'};
-my $ref='PrototypeReferenceGenomes/kb|g.166819_assembly';
+my $ref='ReferenceGenomeAnnotations/kb|g.166819_assembly';
 
 #ap = argparse.ArgumentParser()
 #ap.add_argument('--ref', default='PrototypeReferenceGenomes/kb|g.166819_assembly', help='Object reference ID, e.g. 1019/4/1')
