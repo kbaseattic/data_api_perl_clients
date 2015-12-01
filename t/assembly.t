@@ -10,8 +10,8 @@ use DOEKBase::DataAPI::sequence::assembly::ClientAPI;
 
 my $url='http://localhost:9102';
 my $token=$ENV{'KB_AUTH_TOKEN'};
-my $ref='PrototypeReferenceGenomes/kb|g.166819_assembly';
-my $badref='PrototypeReferenceGenomes/kb|g.000000_assembly';
+my $ref='ReferenceGenomeAnnotations/kb|g.166819_assembly';
+my $badref='ReferenceGenomeAnnotations/kb|g.000000_assembly';
 
 my @functions = qw(
 get_assembly_id

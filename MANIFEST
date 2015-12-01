@@ -12,4 +12,8 @@ lib/DOEKBase/DataAPI/taxonomy/taxon/ClientAPI.pm
 lib/DOEKBase/DataAPI/taxonomy/taxon/thrift_service.pm
 lib/DOEKBase/DataAPI/taxonomy/taxon/Types.pm
 lib/DOEKBase/DataAPI/taxonomy/taxon/Constants.pm
+lib/DOEKBase/DataAPI/annotation/genome_annotation/thrift_service.pm
+lib/DOEKBase/DataAPI/annotation/genome_annotation/Types.pm
+lib/DOEKBase/DataAPI/annotation/genome_annotation/Constants.pm
+lib/DOEKBase/DataAPI/annotation/genome_annotation/ClientAPI.pm
 META.json
