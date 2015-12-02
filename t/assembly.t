@@ -15,7 +15,6 @@ my $badref='ReferenceGenomeAnnotations/kb|g.000000_assembly';
 
 my @functions = qw(
 get_assembly_id
-get_genome_annotations
 get_external_source_info
 get_stats
 get_number_contigs
@@ -25,6 +24,7 @@ get_contig_ids
 get_contig_lengths
 get_contig_gc_content
 get_contigs
+get_genome_annotations
 );
 
 plan tests => 2 * (scalar(@functions) + 1);

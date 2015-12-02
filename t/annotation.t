@@ -19,16 +19,17 @@ get_assembly
 get_feature_types
 get_feature_type_descriptions
 get_feature_type_counts
+get_proteins
+get_feature_ids
+get_features
+get_feature_locations
+get_feature_dna
+get_feature_functions
+get_feature_aliases
+get_feature_publications
 );
 
-#get_proteins
-#get_feature_ids
-#get_features
-#get_feature_locations
-#get_feature_dna
-#get_feature_functions
-#get_feature_aliases
-#get_feature_publications
+# not ready yet
 #get_cds_by_mrna
 #get_mrna_by_cds
 #get_gene_by_cds
