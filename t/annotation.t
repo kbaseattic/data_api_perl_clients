@@ -29,27 +29,32 @@ get_feature_aliases
 get_feature_publications
 );
 
-# not ready yet
-#get_cds_by_mrna
-#get_mrna_by_cds
-#get_gene_by_cds
-#get_gene_by_mrna
-#get_cds_by_gene
-#get_mrna_by_gene
+my @feature_functions = qw(
+get_mrna_by_cds
+get_cds_by_mrna
+get_gene_by_cds
+get_gene_by_mrna
+get_cds_by_gene
+get_mrna_by_gene
+);
 
-plan tests => 2 * (scalar(@functions) + 1);
+plan tests => 2 * (scalar(@functions) + scalar(@feature_functions) + 1);
 
 my $api = new_ok(DOEKBase::DataAPI::annotation::genome_annotation::ClientAPI=>[{url=>$url,token=>$token,ref=>$ref}]);
+my $badapi = new_ok(DOEKBase::DataAPI::annotation::genome_annotation::ClientAPI=>[{url=>$url,token=>$token,ref=>$badref}]);
+
+my $feature_ids = ['kb|g.166819.CDS.6671', 'kb|g.166819.CDS.202', 'kb|g.166819.CDS.203'];
+
+foreach my $function (@feature_functions)
+{
+    ok($result = $api->$function($feature_ids), "$function goodref" );
+    dies_ok { $result = $badapi->$function($feature_ids) } "$function badref" ;
+}
 
 foreach my $function (@functions)
 {
     ok($result = $api->$function(), "$function goodref" );
-}
-
-my $badapi = new_ok(DOEKBase::DataAPI::annotation::genome_annotation::ClientAPI=>[{url=>$url,token=>$token,ref=>$badref}]);
-
-foreach my $function (@functions)
-{
     dies_ok { $result = $badapi->$function() } "$function badref" ;
 }
+
 

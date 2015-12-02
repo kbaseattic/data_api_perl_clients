@@ -58,13 +58,14 @@ get_feature_dna
 get_feature_functions
 get_feature_aliases
 get_feature_publications
-get_cds_by_mrna
 get_mrna_by_cds
+get_cds_by_mrna
 get_gene_by_cds
 get_gene_by_mrna
 get_cds_by_gene
 get_mrna_by_gene
 );
+
 
 foreach my $function (@functions)
 {
@@ -72,8 +73,10 @@ foreach my $function (@functions)
   *$function = sub {
     my $self=shift;
 
+    my @args=@_;
+
     my $result = try {
-      $self->{'client'}->$function($self->{'token'},$self->{'ref'});
+      $self->{'client'}->$function($self->{'token'},$self->{'ref'}, @args);
     } catch {
       no warnings 'uninitialized';
       confess "Exception thrown by $function: code " . $_->{'code'} . ' message ' . $_->{'message'};

@@ -69,8 +69,10 @@ foreach my $function (@functions)
   *$function = sub {
     my $self=shift;
 
+    my @args=@_;
+
     my $result = try {
-      $self->{'client'}->$function($self->{'token'},$self->{'ref'});
+      $self->{'client'}->$function($self->{'token'},$self->{'ref'}, @args);
     } catch {
       no warnings 'uninitialized';
       confess "Exception thrown by $function: code " . $_->{'code'} . ' message ' . $_->{'message'};
