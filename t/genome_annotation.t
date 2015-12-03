@@ -38,6 +38,9 @@ get_cds_by_gene
 get_mrna_by_gene
 );
 
+#### TODO: split out tests by cds, mrna, gene (see bin/annotation_client_driver.pl)
+#### test filtering for get_feature_ids
+
 plan tests => 2 * (scalar(@functions) + scalar(@feature_functions) + 1);
 
 my $api = new_ok(DOEKBase::DataAPI::annotation::genome_annotation::ClientAPI=>[{url=>$url,token=>$token,ref=>$ref}]);
