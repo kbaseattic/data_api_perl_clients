@@ -35,16 +35,11 @@ get_children
 plan tests => 2 * (scalar(@functions) + 1);
 
 my $api = new_ok(DOEKBase::DataAPI::taxonomy::taxon::ClientAPI=>[{url=>$url,token=>$token,ref=>$ref}]);
-
-foreach my $function (@functions)
-{
-    ok($result = $api->$function(), "$function goodref" );
-}
-
 my $badapi = new_ok(DOEKBase::DataAPI::taxonomy::taxon::ClientAPI=>[{url=>$url,token=>$token,ref=>$badref}]);
 
 foreach my $function (@functions)
 {
+    ok($result = $api->$function(), "$function goodref" );
     dies_ok { $result = $badapi->$function() } "$function badref" ;
 }
 

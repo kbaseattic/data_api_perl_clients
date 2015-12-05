@@ -15,7 +15,6 @@ my $badref='ReferenceGenomeAnnotations/kb|g.000000_assembly';
 
 my @functions = qw(
 get_assembly_id
-get_genome_annotations
 get_external_source_info
 get_stats
 get_number_contigs
@@ -25,21 +24,17 @@ get_contig_ids
 get_contig_lengths
 get_contig_gc_content
 get_contigs
+get_genome_annotations
 );
 
 plan tests => 2 * (scalar(@functions) + 1);
 
 my $api = new_ok(DOEKBase::DataAPI::sequence::assembly::ClientAPI=>[{url=>$url,token=>$token,ref=>$ref}]);
-
-foreach my $function (@functions)
-{
-    ok($result = $api->$function(), "$function goodref" );
-}
-
 my $badapi = new_ok(DOEKBase::DataAPI::sequence::assembly::ClientAPI=>[{url=>$url,token=>$token,ref=>$badref}]);
 
 foreach my $function (@functions)
 {
+    ok($result = $api->$function(), "$function goodref" );
     dies_ok { $result = $badapi->$function() } "$function badref" ;
 }
 
