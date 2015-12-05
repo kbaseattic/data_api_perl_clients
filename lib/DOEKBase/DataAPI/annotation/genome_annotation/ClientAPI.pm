@@ -15,8 +15,10 @@ use DOEKBase::DataAPI::annotation::genome_annotation::thrift_service;
 use DOEKBase::DataAPI::annotation::genome_annotation::Types;
 
 package DOEKBase::DataAPI::annotation::genome_annotation::ClientAPI;
+
 use Try::Tiny;
 use Carp;
+use Data::Dumper;
 
 sub new {
   my $classname = shift;
@@ -50,7 +52,6 @@ get_assembly
 get_feature_types
 get_feature_type_descriptions
 get_feature_type_counts
-get_feature_ids
 get_features
 get_proteins
 get_feature_locations
@@ -66,6 +67,8 @@ get_cds_by_gene
 get_mrna_by_gene
 );
 
+# Some methods can not be generated
+# get_feature_ids
 
 foreach my $function (@functions)
 {
@@ -79,11 +82,42 @@ foreach my $function (@functions)
       $self->{'client'}->$function($self->{'token'},$self->{'ref'}, @args);
     } catch {
       no warnings 'uninitialized';
-      confess "Exception thrown by $function: code " . $_->{'code'} . ' message ' . $_->{'message'};
+      confess "$_ Exception thrown by $function: code " . $_->{'code'} . ' message ' . $_->{'message'};
     };
 
     return $result;
   };
 }
+
+# Custom methods, can not be generated
+
+sub get_feature_ids {
+    my $self=shift;
+
+    my %args=@_;
+
+#    print Dumper(@args);
+
+#filters={'type_list':['CDS','mRNA'],'region_list':[],'function_list':[],'alias_list':[]}
+
+#      $self->{'client'}->get_feature_ids($self->{'token'},$self->{'ref'}, {type_list=>['CDS'],'region_list'=>[],'function_list'=>[],'alias_list'=>[]},{});
+
+    my $converted_filters = DOEKBase::DataAPI::annotation::genome_annotation::Feature_id_filters->new();
+    foreach my $filter (keys %{$args{'filters'}})
+    {
+        $converted_filters->{$filter}=$args{'filters'}{$filter};
+    }
+
+    my $result = try {
+#      $self->{'client'}->get_feature_ids($self->{'token'},$self->{'ref'}, $converted_filters,{});
+      $self->{'client'}->get_feature_ids($self->{'token'},$self->{'ref'},$converted_filters);
+    } catch {
+      no warnings 'uninitialized';
+      no strict 'refs';
+      confess "$_ Exception thrown by get_feature_ids: code " . $_->{'code'} . ' message ' . $_->{'message'};
+    };
+
+    return $result;
+  }
 
 1;

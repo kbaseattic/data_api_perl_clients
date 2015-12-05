@@ -51,10 +51,13 @@ get_mrna_by_gene
 
 ##### TODO: test filters for get_feature_ids (see https://kbase.github.io/docs-ghpages/docs/data_api/annotation_api.html)
 
-    my $all_feature_ids = $api->get_feature_ids();
-    my @cds_ids = @{$all_feature_ids->{'by_type'}{'CDS'}}[0,1,2];
-    my @mrna_ids = @{$all_feature_ids->{'by_type'}{'mRNA'}}[0,1,2];
-    my @gene_ids = @{$all_feature_ids->{'by_type'}{'gene'}}[0,1,2];
+    my $all_cds_ids = $api->get_feature_ids(filters=>{type_list=>['CDS']});
+    my $all_mrna_ids = $api->get_feature_ids(filters=>{type_list=>['mRNA']});
+    my $all_gene_ids = $api->get_feature_ids(filters=>{type_list=>['gene']});
+#    my $all_feature_ids = $api->get_feature_ids();
+    my @cds_ids = @{$all_cds_ids->{'by_type'}{'CDS'}}[0,1,2];
+    my @mrna_ids = @{$all_mrna_ids->{'by_type'}{'mRNA'}}[0,1,2];
+    my @gene_ids = @{$all_gene_ids->{'by_type'}{'gene'}}[0,1,2];
 
     foreach my $function (@cds_functions)
     {
