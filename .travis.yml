@@ -15,7 +15,7 @@ sudo: false
 #    - $HOME/.cache/pip
 
 env:
-#  - KB_DEPLOY_URL="dir_cache"
+  - KB_DEPLOY_URL="dir_cache"
   - KB_DEPLOY_URL="dir_nocache"
 #  - KB_REDIS_HOST=localhost; KB_NOSE_CFG=nose-ci.cfg
 #  - KB_REDIS_HOST="";        KB_NOSE_CFG=nose-ci.cfg
