@@ -56,10 +56,11 @@ script:
 # see if perl client scripts work (plus timings)
   - ./bin/assembly_client_driver.pl 2> assemblyPerlClient.out
   - ./bin/taxon_client_driver.pl 2> taxonPerlClient.out
+  - ./bin/genome_annotation_client_driver.pl 2> genome_annotationPerlClient.out
 # see if python clients work (plus timings)
   - assembly_client_driver.py > assemblyPythonClient.out
   - taxon_client_driver.py > taxonPythonClient.out
-  - genome_annotation_client_driver.py > genome_annotationPythonClient.out
+#  - genome_annotation_client_driver.py > genome_annotationPythonClient.out
 # do actual tests, with coverage
   - cover -test -ignore .pm -select ClientAPI.pm
 
