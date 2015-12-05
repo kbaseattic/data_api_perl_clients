@@ -59,7 +59,7 @@ script:
 # see if python clients work (plus timings)
   - assembly_client_driver.py > assemblyPythonClient.out
   - taxon_client_driver.py > taxonPythonClient.out
-#  - genome_annotation_client_driver.py > genome_annotationPythonClient.out
+  - genome_annotation_client_driver.py > genome_annotationPythonClient.out
 # do actual tests, with coverage
   - cover -test -ignore .pm -select ClientAPI.pm
 
@@ -70,7 +70,7 @@ after_success:
   - cat taxonPythonClient.out
   - cat taxonPerlClient.out
 #  - cat genome_annotationPythonClient.out
-#  - cat genome_annotationPerlClient.out
+  - cat genome_annotationPerlClient.out
 # clean up after services
   - cd ../core-develop
   - kill $(cat taxonAPI.pid)
@@ -91,7 +91,7 @@ after_failure:
   - cat taxonPythonClient.out
   - cat taxonPerlClient.out
 #  - cat genome_annotationPythonClient.out
-#  - cat genome_annotationPerlClient.out
+  - cat genome_annotationPerlClient.out
 # clean up after services
   - cd ../core-develop
   - kill $(cat taxonAPI.pid)
