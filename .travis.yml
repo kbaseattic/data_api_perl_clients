@@ -43,9 +43,9 @@ install:
 before_script:
 # start API services
   - cd ../core-develop
-  - data_api_start_service.py --service taxon --config ../core-develop/deployment.cfg > taxonAPI.out 2> taxonAPI.err &
-  - data_api_start_service.py --service assembly --config deployment.cfg > assemblyAPI.out 2> assemblyAPI.err &
-  - data_api_start_service.py --service genome_annotation --config deployment.cfg > genome_annotationAPI.out 2> genome_annotationAPI.err &
+  - data_api_start_service.py --service taxon --kbase_url $KB_DEPLOY_URL --config ../core-develop/deployment.cfg > taxonAPI.out 2> taxonAPI.err &
+  - data_api_start_service.py --service assembly --kbase_url $KB_DEPLOY_URL --config deployment.cfg > assemblyAPI.out 2> assemblyAPI.err &
+  - data_api_start_service.py --service genome_annotation --kbase_url $KB_DEPLOY_URL --config deployment.cfg > genome_annotationAPI.out 2> genome_annotationAPI.err &
 ##  - data_api_start_service.py --service genomeannotation --config deployment.cfg > genomeannotationAPI.out &
   - sleep 5
   - cd ../data_api_perl_clients
