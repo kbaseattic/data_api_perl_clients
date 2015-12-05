@@ -41,6 +41,8 @@ install:
   - ./Build install --cpan-client 'cpanm'
 
 before_script:
+# start redis
+  - redis-server redis.conf &
 # start API services
   - cd ../core-develop
   - data_api_start_service.py --service taxon --kbase_url $KB_DEPLOY_URL --config ../core-develop/deployment.cfg > taxonAPI.out 2> taxonAPI.err &
@@ -66,6 +68,7 @@ script:
 
 after_success:
   - cover -report codecov
+  - redis-cli info keystore
   - cat assemblyPythonClient.out
   - cat assemblyPerlClient.out
   - cat taxonPythonClient.out
@@ -88,6 +91,7 @@ after_success:
   - rm -f taxonAPI.* assemblyAPI.* genome_annotationAPI.*
 
 after_failure:
+  - redis-cli info keystore
   - cat assemblyPythonClient.out
   - cat assemblyPerlClient.out
   - cat taxonPythonClient.out
