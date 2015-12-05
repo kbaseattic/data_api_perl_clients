@@ -71,7 +71,8 @@ after_success:
   - cat taxonPythonClient.out
   - cat taxonPerlClient.out
 #  - cat genome_annotationPythonClient.out
-  - cat genome_annotationPerlClient.out
+# too big
+#  - cat genome_annotationPerlClient.out
 # clean up after services
   - cd ../core-develop
   - kill $(cat taxonAPI.pid)
@@ -92,7 +93,8 @@ after_failure:
   - cat taxonPythonClient.out
   - cat taxonPerlClient.out
 #  - cat genome_annotationPythonClient.out
-  - cat genome_annotationPerlClient.out
+# too big
+#  - cat genome_annotationPerlClient.out
 # clean up after services
   - cd ../core-develop
   - kill $(cat taxonAPI.pid)
