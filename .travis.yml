@@ -82,12 +82,13 @@ after_success:
   - kill $(cat assemblyAPI.pid)
   - kill $(cat genome_annotationAPI.pid)
 # Make service logs easy to inspect, then clean up
-  - cat assemblyAPI.out
-  - cat assemblyAPI.err
-  - cat taxonAPI.out
-  - cat taxonAPI.err
-  - cat genome_annotationAPI.out
-  - cat genome_annotationAPI.err
+# only do in after_failure
+#  - cat assemblyAPI.out
+#  - cat assemblyAPI.err
+#  - cat taxonAPI.out
+#  - cat taxonAPI.err
+#  - cat genome_annotationAPI.out
+#  - cat genome_annotationAPI.err
   - rm -f taxonAPI.* assemblyAPI.* genome_annotationAPI.*
 
 after_failure:
