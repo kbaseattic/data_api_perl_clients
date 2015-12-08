@@ -46,13 +46,14 @@ get_children
 
 }
 
-my $url='http://localhost:9101';
+my $url='https://ci.kbase.us/services/data/taxon';
 my $token=$ENV{'KB_AUTH_TOKEN'};
 my $ref='ReferenceTaxons/242159_taxon';
 
-test_client($url,$token,$ref);
+GetOptions (
+    'url=s' => \$url,
+    'token=s' => \$token,
+    'ref=s' => \$ref,
+);
 
-#    ap.add_argument('--ref', default='ReferenceTaxons/242159_taxon', help='Object reference ID, e.g. 1019/4/1')
-#    ap.add_argument('--url', dest='url', default='http://localhost:9101',
-#                    metavar='URL', help='Remote server url '
-#                                         '(default=%(default)s)')
+test_client($url,$token,$ref);

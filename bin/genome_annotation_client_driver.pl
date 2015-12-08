@@ -14,11 +14,12 @@ use DOEKBase::DataAPI::annotation::genome_annotation::ClientAPI;
 sub test_client {
     my ($url,$token,$ref) = @_;
 #    my $api = annotation::genome_annotation::ClientAPI->new({url=>$url,token=>$token,ref=>$ref});
+    warn $url;
     my $api = DOEKBase::DataAPI::annotation::genome_annotation::ClientAPI->new({url=>$url,token=>$token,ref=>$ref});
 
     warn "Getting data..";
 
-my @functions = qw(
+    my @generic_functions = qw(
 get_taxon
 get_feature_types
 get_feature_type_descriptions
@@ -28,7 +29,7 @@ get_feature_ids
 get_assembly
 );
 
-my @cds_functions = qw(
+    my @cds_functions = qw(
 get_features
 get_feature_dna
 get_feature_locations
@@ -39,15 +40,24 @@ get_mrna_by_cds
 get_gene_by_cds
 );
 
-my @mrna_functions=qw(
+    my @mrna_functions=qw(
 get_cds_by_mrna
 get_gene_by_mrna
 );
 
-my @gene_functions=qw(
+    my @gene_functions=qw(
 get_cds_by_gene
 get_mrna_by_gene
 );
+
+    foreach my $function (@generic_functions)
+    {
+        my $start_time=time();
+        my $result = $api->$function();
+        my $elapsed_time=time()-$start_time;
+        warn Dumper($result);
+        warn "Got and parsed data from $function in $elapsed_time seconds";
+    }
 
 ##### TODO: test filters for get_feature_ids (see https://kbase.github.io/docs-ghpages/docs/data_api/annotation_api.html)
 
@@ -86,20 +96,18 @@ get_mrna_by_gene
         warn "Got and parsed data from $function in $elapsed_time seconds";
     }
 
-    foreach my $function (@functions)
-    {
-        my $start_time=time();
-        my $result = $api->$function();
-        my $elapsed_time=time()-$start_time;
-        warn Dumper($result);
-        warn "Got and parsed data from $function in $elapsed_time seconds";
-    }
-
 }
 
-my $url='http://localhost:9103';
+#my $url='http://localhost:9103';
+my $url='https://ci.kbase.us/services/data/annotation';
 my $token=$ENV{'KB_AUTH_TOKEN'};
 my $ref='ReferenceGenomeAnnotations/kb|g.166819';
+
+GetOptions (
+    'url=s' => \$url,
+    'token=s' => \$token,
+    'ref=s' => \$ref,
+);
 
 #ap = argparse.ArgumentParser()
 #ap.add_argument('--ref', default='PrototypeReferenceGenomes/kb|g.166819_assembly', help='Object reference ID, e.g. 1019/4/1')
