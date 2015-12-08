@@ -14,6 +14,7 @@ sub test_client {
     my ($url,$token,$ref) = @_;
     my $api = DOEKBase::DataAPI::taxonomy::taxon::ClientAPI->new({url=>$url,token=>$token,ref=>$ref});
 
+    warn "Using URL $url and reference $ref";
     warn "Getting data..";
 
     my @functions = qw(

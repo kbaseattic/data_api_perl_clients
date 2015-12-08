@@ -13,7 +13,7 @@ use DOEKBase::DataAPI::sequence::assembly::ClientAPI;
 
 sub test_client {
     my ($url,$token,$ref) = @_;
-#    my $api = sequence::assembly::ClientAPI->new({url=>$url,token=>$token,ref=>$ref});
+    warn "Using URL $url and reference $ref";
     my $api = DOEKBase::DataAPI::sequence::assembly::ClientAPI->new({url=>$url,token=>$token,ref=>$ref});
 
     warn "Getting data..";

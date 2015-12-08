@@ -13,8 +13,7 @@ use DOEKBase::DataAPI::annotation::genome_annotation::ClientAPI;
 
 sub test_client {
     my ($url,$token,$ref) = @_;
-#    my $api = annotation::genome_annotation::ClientAPI->new({url=>$url,token=>$token,ref=>$ref});
-    warn $url;
+    warn "Using URL $url and reference $ref";
     my $api = DOEKBase::DataAPI::annotation::genome_annotation::ClientAPI->new({url=>$url,token=>$token,ref=>$ref});
 
     warn "Getting data..";
