@@ -57,7 +57,7 @@ script:
 # see if perl client scripts work (plus timings)
   - ./bin/taxon_client_driver.pl --url http://localhost:9101 2> taxonPerlClient.out
   - ./bin/assembly_client_driver.pl --url http://localhost:9102 2> assemblyPerlClient.out
-  - ./bin/genome_annotation_client_driver.pl http://localhost:9103 2> genome_annotationPerlClient.out
+  - ./bin/genome_annotation_client_driver.pl --url http://localhost:9103 2> genome_annotationPerlClient.out
 # see if python clients work (plus timings)
   - assembly_client_driver.py > assemblyPythonClient.out
   - taxon_client_driver.py > taxonPythonClient.out
