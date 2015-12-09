@@ -50,22 +50,22 @@ get_mrna_by_gene
 );
 
     my $start_time=time();
-    my $result = $api->get_feature_ids(filters=>{function_list=>['PF02213']});
+    my $result = $api->get_feature_ids(filters=>{region_list=>[{'contig_id'=>'kb|g.166819.c.0','strand'=>'?','start'=>1000000,'length'=>10000}]},group_by=>'region');
+    my $elapsed_time=time()-$start_time;
+    warn Dumper($result);
+    warn "Got and parsed data from get_feature_ids region_list filter in $elapsed_time seconds";
+
+    my $start_time=time();
+    my $result = $api->get_feature_ids(filters=>{function_list=>['PF02213']},group_by=>'function');
     my $elapsed_time=time()-$start_time;
     warn Dumper($result);
     warn "Got and parsed data from get_feature_ids function_list filter in $elapsed_time seconds";
 
     my $start_time=time();
-    my $result = $api->get_feature_ids(filters=>{alias_list=>['14344']});
+    my $result = $api->get_feature_ids(filters=>{alias_list=>['14344']},group_by=>'alias');
     my $elapsed_time=time()-$start_time;
     warn Dumper($result);
     warn "Got and parsed data from get_feature_ids alias_list filter in $elapsed_time seconds";
-
-    my $start_time=time();
-    my $result = $api->get_feature_ids(filters=>{region_list=>[{'contig_id'=>'kb|g.166819.c.0','strand'=>'-','start'=>189000,'length'=>10000}]});
-    my $elapsed_time=time()-$start_time;
-    warn Dumper($result);
-    warn "Got and parsed data from get_feature_ids region_list filter in $elapsed_time seconds";
 
     foreach my $function (@generic_functions)
     {
