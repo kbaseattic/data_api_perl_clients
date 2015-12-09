@@ -109,15 +109,21 @@ sub get_feature_ids {
         $converted_filters->{'region_list'} = \@regions;
     }
 
+    my $group_by = $args{'group_by'} || 'type';
+
     my $result = try {
-      $self->{'client'}->get_feature_ids($self->{'token'},$self->{'ref'},$converted_filters);
+      $self->{'client'}->get_feature_ids($self->{'token'},$self->{'ref'},$converted_filters,$group_by);
     } catch {
       no warnings 'uninitialized';
       no strict 'refs';
       confess "$_ Exception thrown by get_feature_ids: code " . $_->{'code'} . ' message ' . $_->{'message'};
     };
 
-    return $result;
+    # strip out extraneous group_by keys
+    my $final_result = {};
+    $final_result->{"by_$group_by"} = $result->{"by_$group_by"};
+
+    return $final_result;
   }
 
 1;
