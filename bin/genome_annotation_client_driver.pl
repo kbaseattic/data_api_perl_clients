@@ -49,6 +49,24 @@ get_cds_by_gene
 get_mrna_by_gene
 );
 
+    my $start_time=time();
+    my $result = $api->get_feature_ids(filters=>{function_list=>['PF02213']});
+    my $elapsed_time=time()-$start_time;
+    warn Dumper($result);
+    warn "Got and parsed data from get_feature_ids function_list filter in $elapsed_time seconds";
+
+    my $start_time=time();
+    my $result = $api->get_feature_ids(filters=>{alias_list=>['14344']});
+    my $elapsed_time=time()-$start_time;
+    warn Dumper($result);
+    warn "Got and parsed data from get_feature_ids alias_list filter in $elapsed_time seconds";
+
+    my $start_time=time();
+    my $result = $api->get_feature_ids(filters=>{region_list=>[{'contig_id'=>'kb|g.166819.c.0','strand'=>'-','start'=>189000,'length'=>10000}]});
+    my $elapsed_time=time()-$start_time;
+    warn Dumper($result);
+    warn "Got and parsed data from get_feature_ids region_list filter in $elapsed_time seconds";
+
     foreach my $function (@generic_functions)
     {
         my $start_time=time();
@@ -67,6 +85,8 @@ get_mrna_by_gene
     my @cds_ids = @{$all_cds_ids->{'by_type'}{'CDS'}}[0,1,2];
     my @mrna_ids = @{$all_mrna_ids->{'by_type'}{'mRNA'}}[0,1,2];
     my @gene_ids = @{$all_gene_ids->{'by_type'}{'gene'}}[0,1,2];
+
+    push @cds_ids,'kb|g.166819.CDS.4387', 'kb|g.166819.CDS.4718', 'kb|g.166819.CDS.279';
 
     foreach my $function (@cds_functions)
     {

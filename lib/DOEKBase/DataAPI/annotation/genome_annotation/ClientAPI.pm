@@ -98,18 +98,18 @@ sub get_feature_ids {
 
 #    print Dumper(@args);
 
-#filters={'type_list':['CDS','mRNA'],'region_list':[],'function_list':[],'alias_list':[]}
-
-#      $self->{'client'}->get_feature_ids($self->{'token'},$self->{'ref'}, {type_list=>['CDS'],'region_list'=>[],'function_list'=>[],'alias_list'=>[]},{});
-
     my $converted_filters = DOEKBase::DataAPI::annotation::genome_annotation::Feature_id_filters->new();
     foreach my $filter (keys %{$args{'filters'}})
     {
         $converted_filters->{$filter}=$args{'filters'}{$filter};
     }
+    if ($args{'filters'}{'region_list'})
+    {
+        my @regions = map { DOEKBase::DataAPI::annotation::genome_annotation::Region->new($_) } @{$args{'filters'}{'region_list'}};
+        $converted_filters->{'region_list'} = \@regions;
+    }
 
     my $result = try {
-#      $self->{'client'}->get_feature_ids($self->{'token'},$self->{'ref'}, $converted_filters,{});
       $self->{'client'}->get_feature_ids($self->{'token'},$self->{'ref'},$converted_filters);
     } catch {
       no warnings 'uninitialized';
