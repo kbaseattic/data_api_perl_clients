@@ -127,17 +127,17 @@ sub get_feature_ids {
         }
     }
 
-# taken from python api, will need to translate
-# by_region won't work yet, its structure is different from the others
-# there must be a nicer way to do this
-#        for contig in result.by_region.keys():
-#            output['by_region'][contig] = dict()
-#            for strand in result.by_region[contig]:
-#                output['by_region'][contig][strand] = dict()
-#                for region in result.by_region[contig][strand]:
-#                    output['by_region'][contig][strand][region] = list()
-#                    for featuretuple in result.by_region[contig][strand][region]:
-#                        output['by_region'][contig][strand][region].append( (featuretuple.feature_type,featuretuple.feature_id) )
+    # filter by region is a different structure
+    foreach my $contig (keys %{$result->{'by_region'}})
+    {
+        foreach my $strand (keys %{$result->{'by_region'}{$contig}})
+        {
+            foreach my $region (keys %{$result->{'by_region'}{$contig}{$strand}})
+            {
+                push @{$final_result->{'by_region'}{$contig}{$strand}{$region}}, map { [ $_->feature_type(),$_->feature_id() ] } @{$result->{'by_region'}{$contig}{$strand}{$region}};
+            }
+        }
+    }
 
     # only return relevant group_by key
     return {"by_$group_by",$final_result->{"by_$group_by"} };
