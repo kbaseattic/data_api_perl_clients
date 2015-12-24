@@ -673,6 +673,85 @@ sub write {
   return $xfer;
 }
 
+package DOEKBase::DataAPI::annotation::genome_annotation::Feature_tuple;
+use base qw(Class::Accessor);
+DOEKBase::DataAPI::annotation::genome_annotation::Feature_tuple->mk_accessors( qw( feature_type feature_id ) );
+
+sub new {
+  my $classname = shift;
+  my $self      = {};
+  my $vals      = shift || {};
+  $self->{feature_type} = undef;
+  $self->{feature_id} = undef;
+  if (UNIVERSAL::isa($vals,'HASH')) {
+    if (defined $vals->{feature_type}) {
+      $self->{feature_type} = $vals->{feature_type};
+    }
+    if (defined $vals->{feature_id}) {
+      $self->{feature_id} = $vals->{feature_id};
+    }
+  }
+  return bless ($self, $classname);
+}
+
+sub getName {
+  return 'Feature_tuple';
+}
+
+sub read {
+  my ($self, $input) = @_;
+  my $xfer  = 0;
+  my $fname;
+  my $ftype = 0;
+  my $fid   = 0;
+  $xfer += $input->readStructBegin(\$fname);
+  while (1) 
+  {
+    $xfer += $input->readFieldBegin(\$fname, \$ftype, \$fid);
+    if ($ftype == TType::STOP) {
+      last;
+    }
+    SWITCH: for($fid)
+    {
+      /^1$/ && do{      if ($ftype == TType::STRING) {
+        $xfer += $input->readString(\$self->{feature_type});
+      } else {
+        $xfer += $input->skip($ftype);
+      }
+      last; };
+      /^2$/ && do{      if ($ftype == TType::STRING) {
+        $xfer += $input->readString(\$self->{feature_id});
+      } else {
+        $xfer += $input->skip($ftype);
+      }
+      last; };
+        $xfer += $input->skip($ftype);
+    }
+    $xfer += $input->readFieldEnd();
+  }
+  $xfer += $input->readStructEnd();
+  return $xfer;
+}
+
+sub write {
+  my ($self, $output) = @_;
+  my $xfer   = 0;
+  $xfer += $output->writeStructBegin('Feature_tuple');
+  if (defined $self->{feature_type}) {
+    $xfer += $output->writeFieldBegin('feature_type', TType::STRING, 1);
+    $xfer += $output->writeString($self->{feature_type});
+    $xfer += $output->writeFieldEnd();
+  }
+  if (defined $self->{feature_id}) {
+    $xfer += $output->writeFieldBegin('feature_id', TType::STRING, 2);
+    $xfer += $output->writeString($self->{feature_id});
+    $xfer += $output->writeFieldEnd();
+  }
+  $xfer += $output->writeFieldStop();
+  $xfer += $output->writeStructEnd();
+  return $xfer;
+}
+
 package DOEKBase::DataAPI::annotation::genome_annotation::Feature_id_filters;
 use base qw(Class::Accessor);
 DOEKBase::DataAPI::annotation::genome_annotation::Feature_id_filters->mk_accessors( qw( type_list region_list function_list alias_list ) );
@@ -943,7 +1022,8 @@ sub read {
               for (my $_i55 = 0; $_i55 < $_size51; ++$_i55)
               {
                 my $elem56 = undef;
-                $xfer += $input->readString(\$elem56);
+                $elem56 = new DOEKBase::DataAPI::annotation::genome_annotation::Feature_tuple();
+                $xfer += $elem56->read($input);
                 push(@{$val50},$elem56);
               }
               $xfer += $input->readListEnd();
@@ -998,7 +1078,8 @@ sub read {
                       for (my $_i82 = 0; $_i82 < $_size78; ++$_i82)
                       {
                         my $elem83 = undef;
-                        $xfer += $input->readString(\$elem83);
+                        $elem83 = new DOEKBase::DataAPI::annotation::genome_annotation::Feature_tuple();
+                        $xfer += $elem83->read($input);
                         push(@{$val77},$elem83);
                       }
                       $xfer += $input->readListEnd();
@@ -1039,7 +1120,8 @@ sub read {
               for (my $_i95 = 0; $_i95 < $_size91; ++$_i95)
               {
                 my $elem96 = undef;
-                $xfer += $input->readString(\$elem96);
+                $elem96 = new DOEKBase::DataAPI::annotation::genome_annotation::Feature_tuple();
+                $xfer += $elem96->read($input);
                 push(@{$val90},$elem96);
               }
               $xfer += $input->readListEnd();
@@ -1072,7 +1154,8 @@ sub read {
               for (my $_i108 = 0; $_i108 < $_size104; ++$_i108)
               {
                 my $elem109 = undef;
-                $xfer += $input->readString(\$elem109);
+                $elem109 = new DOEKBase::DataAPI::annotation::genome_annotation::Feature_tuple();
+                $xfer += $elem109->read($input);
                 push(@{$val103},$elem109);
               }
               $xfer += $input->readListEnd();
@@ -1106,11 +1189,11 @@ sub write {
         {
           $xfer += $output->writeString($kiter110);
           {
-            $xfer += $output->writeListBegin(TType::STRING, scalar(@{${viter111}}));
+            $xfer += $output->writeListBegin(TType::STRUCT, scalar(@{${viter111}}));
             {
               foreach my $iter112 (@{${viter111}}) 
               {
-                $xfer += $output->writeString($iter112);
+                $xfer += ${iter112}->write($output);
               }
             }
             $xfer += $output->writeListEnd();
@@ -1142,11 +1225,11 @@ sub write {
                     {
                       $xfer += $output->writeString($kiter117);
                       {
-                        $xfer += $output->writeListBegin(TType::STRING, scalar(@{${viter118}}));
+                        $xfer += $output->writeListBegin(TType::STRUCT, scalar(@{${viter118}}));
                         {
                           foreach my $iter119 (@{${viter118}}) 
                           {
-                            $xfer += $output->writeString($iter119);
+                            $xfer += ${iter119}->write($output);
                           }
                         }
                         $xfer += $output->writeListEnd();
@@ -1174,11 +1257,11 @@ sub write {
         {
           $xfer += $output->writeString($kiter120);
           {
-            $xfer += $output->writeListBegin(TType::STRING, scalar(@{${viter121}}));
+            $xfer += $output->writeListBegin(TType::STRUCT, scalar(@{${viter121}}));
             {
               foreach my $iter122 (@{${viter121}}) 
               {
-                $xfer += $output->writeString($iter122);
+                $xfer += ${iter122}->write($output);
               }
             }
             $xfer += $output->writeListEnd();
@@ -1198,11 +1281,11 @@ sub write {
         {
           $xfer += $output->writeString($kiter123);
           {
-            $xfer += $output->writeListBegin(TType::STRING, scalar(@{${viter124}}));
+            $xfer += $output->writeListBegin(TType::STRUCT, scalar(@{${viter124}}));
             {
               foreach my $iter125 (@{${viter124}}) 
               {
-                $xfer += $output->writeString($iter125);
+                $xfer += ${iter125}->write($output);
               }
             }
             $xfer += $output->writeListEnd();
