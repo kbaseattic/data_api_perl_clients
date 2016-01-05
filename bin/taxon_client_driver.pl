@@ -47,7 +47,8 @@ get_children
 
 }
 
-my $url='https://ci.kbase.us/services/data/taxon';
+#my $url='https://ci.kbase.us/services/data/taxon';
+my $url='http://localhost:9101';
 my $token=$ENV{'KB_AUTH_TOKEN'};
 my $ref='ReferenceTaxons/242159_taxon';
 
