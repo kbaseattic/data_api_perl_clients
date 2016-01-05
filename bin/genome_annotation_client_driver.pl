@@ -117,8 +117,8 @@ get_mrna_by_gene
 
 }
 
-#my $url='http://localhost:9103';
-my $url='https://ci.kbase.us/services/data/annotation';
+my $url='http://localhost:9103';
+#my $url='https://ci.kbase.us/services/data/annotation';
 my $token=$ENV{'KB_AUTH_TOKEN'};
 my $ref='ReferenceGenomeAnnotations/kb|g.166819';
 
