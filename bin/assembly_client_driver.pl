@@ -43,7 +43,8 @@ get_contigs
 
 }
 
-my $url='https://ci.kbase.us/services/data/assembly';
+#my $url='https://ci.kbase.us/services/data/assembly';
+my $url='http://localhost:9102';
 my $token=$ENV{'KB_AUTH_TOKEN'};
 my $ref='ReferenceGenomeAnnotations/kb|g.166819_assembly';
 
