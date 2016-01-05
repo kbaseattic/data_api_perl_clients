@@ -10,6 +10,7 @@ use Time::HiRes qw( time );
 # Local
 #use annotation::genome_annotation::ClientAPI;
 use DOEKBase::DataAPI::annotation::genome_annotation::ClientAPI;
+use DOEKBase::DataAPI::annotation::genome_annotation::Types;
 
 sub test_client {
     my ($url,$token,$ref) = @_;
@@ -29,7 +30,6 @@ get_assembly
 );
 
     my @cds_functions = qw(
-get_features
 get_feature_dna
 get_feature_locations
 get_feature_functions
@@ -37,6 +37,7 @@ get_feature_aliases
 get_feature_publications
 get_mrna_by_cds
 get_gene_by_cds
+get_features
 );
 
     my @mrna_functions=qw(
@@ -49,11 +50,18 @@ get_cds_by_gene
 get_mrna_by_gene
 );
 
+
     my $start_time=time();
-    my $result = $api->get_feature_ids(filters=>{region_list=>[{'contig_id'=>'kb|g.166819.c.0','strand'=>'?','start'=>1000000,'length'=>10000}]},group_by=>'region');
+    my $result = $api->get_feature_ids(filters=>{type_list=>['rRNA']},group_by=>'type');
     my $elapsed_time=time()-$start_time;
     warn Dumper($result);
-    warn "Got and parsed data from get_feature_ids region_list filter in $elapsed_time seconds";
+    warn "Got and parsed data from get_feature_ids rRNA type_list filter in $elapsed_time seconds";
+
+    my $start_time=time();
+    my $result = $api->get_features($result->{'by_type'}{'rRNA'});
+    my $elapsed_time=time()-$start_time;
+    warn Dumper($result);
+    warn "Got and parsed data from get_features rRNA type_list filter in $elapsed_time seconds";
 
     my $start_time=time();
     my $result = $api->get_feature_ids(filters=>{function_list=>['PF02213']},group_by=>'function');
@@ -61,11 +69,22 @@ get_mrna_by_gene
     warn Dumper($result);
     warn "Got and parsed data from get_feature_ids function_list filter in $elapsed_time seconds";
 
+    my $subresult=$result->{'by_function'}{'PF02213 ; GYF domain-containing protein'}[0];
+    warn Dumper($subresult);
+
     my $start_time=time();
     my $result = $api->get_feature_ids(filters=>{alias_list=>['14344']},group_by=>'alias');
     my $elapsed_time=time()-$start_time;
     warn Dumper($result);
     warn "Got and parsed data from get_feature_ids alias_list filter in $elapsed_time seconds";
+
+    my $start_time=time();
+    my $result = $api->get_feature_ids(filters=>{region_list=>[{'contig_id'=>'kb|g.166819.c.0','strand'=>'?','start'=>1000000,'length'=>10000}]},group_by=>'region');
+    my $elapsed_time=time()-$start_time;
+    warn Dumper($result);
+    warn "Got and parsed data from get_feature_ids region_list filter in $elapsed_time seconds";
+
+    return;
 
     foreach my $function (@generic_functions)
     {
@@ -86,6 +105,7 @@ get_mrna_by_gene
     my @mrna_ids = @{$all_mrna_ids->{'by_type'}{'mRNA'}}[0,1,2];
     my @gene_ids = @{$all_gene_ids->{'by_type'}{'gene'}}[0,1,2];
 
+    @cds_ids=();
     push @cds_ids,'kb|g.166819.CDS.4387', 'kb|g.166819.CDS.4718', 'kb|g.166819.CDS.279';
 
     foreach my $function (@cds_functions)
