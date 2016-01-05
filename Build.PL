@@ -28,6 +28,7 @@ my %module_build_args = (
     "Thrift" => 0,
     "Try::Tiny" => 0,
     "Class::Accessor" => 0,
+    "LWP::Protocol::https" => 0,
   },
   "script_files" => []
 );
